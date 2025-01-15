@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_NAME=amazon_scraper
+      - DJANGO_DB_USER=mohak
+      - DJANGO_DB_PASSWORD=1
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: amazon_scraper
+      POSTGRES_USER: mohak
+      POSTGRES_PASSWORD: 1
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
